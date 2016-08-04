@@ -419,6 +419,18 @@ class Chosen extends AbstractChosen
     @search_results.append no_results_html
     @form_field_jq.trigger("chosen:no_results", {chosen:this})
 
+  add_button: (terms) ->
+    return false if !@add_button_opt
+    add_button_html = $('<li class="add-term"><button>Add</button><span></span></li>')
+    add_button_html.find("span").first().html(terms)
+    self = this
+    add_button_html.find("button").click (ev) ->
+      option_html = $('<option value="'+terms+'">'+terms+'</option>')
+      self.form_field_jq.append option_html
+      self.form_field_jq.children()[self.form_field_jq.children().length - 1].selected = true;
+      self.form_field_jq.trigger 'chosen:updated'
+    @search_results.append add_button_html
+
   no_results_clear: ->
     @search_results.find(".no-results").remove()
 

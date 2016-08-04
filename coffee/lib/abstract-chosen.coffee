@@ -4,6 +4,7 @@ class AbstractChosen
     return unless AbstractChosen.browser_is_supported()
     @is_multiple = @form_field.multiple
     this.set_default_text()
+    @add_button_opt = @form_field.hasAttribute('data-addbutton')
     this.set_default_values()
 
     this.setup()
@@ -201,6 +202,9 @@ class AbstractChosen
       this.update_results_content this.results_option_build()
       this.winnow_results_set_highlight()
 
+    this.add_button(searchText)
+
+
   get_search_regex: (escaped_search_string) ->
     regex_anchor = if @search_contains then "" else "^"
     regex_flag = if @case_sensitive_search then "" else "i"
@@ -298,4 +302,3 @@ class AbstractChosen
   @default_multiple_text: "Select Some Options"
   @default_single_text: "Select an Option"
   @default_no_result_text: "No results match"
-
